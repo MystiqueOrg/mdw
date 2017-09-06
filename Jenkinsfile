@@ -5,11 +5,11 @@ sleep 15
 node {
 
   stage('Checkout') {
+    step([$class: 'GitHubSetCommitStatusBuilder', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'build'], statusMessage: [content: 'Checking out the code']])
     checkout scm
   }
   
   stage('Build') {
-    step([$class: 'GitHubSetCommitStatusBuilder'])
     isUnix() ? sh('ls -l') : bat('dir')
     sleep 15
   }
@@ -19,6 +19,7 @@ node {
   }
   
   stage('Unit Tests') {
+    step([$class: 'GitHubSetCommitStatusBuilder', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'unit test'], statusMessage: [content: 'running tests']])
     sleep 5
   }
   
