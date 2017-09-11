@@ -3,11 +3,10 @@
 sleep 15
 
 node {
-  step([$class: 'GitHubSetCommitStatusBuilder', statusMessage: [content: 'Does this do anything?']])
+  step([$class: 'GitHubCommitStatusSetter', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'My context 1'], statusResultSource: [$class: 'ConditionalStatusResultSource', results: []]])
   sleep 5
   stage('Checkout') {
-    step([$class: 'GitHubSetCommitStatusBuilder', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'checkout']])
-    checkout scm
+    step([$class: 'GitHubCommitStatusSetter', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'My context 2'], statusResultSource: [$class: 'ConditionalStatusResultSource', results: []]])    checkout scm
   }
   step([$class: 'GitHubSetCommitStatusBuilder', statusMessage: [content: 'What about this?']])
   sleep 5
