@@ -12,20 +12,20 @@ node {
   stage('Build') {
     step([$class: 'GitHubSetCommitStatusBuilder', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'build']])
     isUnix() ? sh('ls -l') : bat('dir')
-    sleep 15
+    sleep 1
   }
   
   stage('Static Analysis') {
-    sleep 5
+    sleep 2
   }
   
   stage('Unit Tests') {
     step([$class: 'GitHubSetCommitStatusBuilder', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'unit test']])
-    sleep 5
+    sleep 3
   }
   
   stage('Functional Tests') {
-    sleep 5
+    sleep 4
   }
     
   stage('Deployment') {
@@ -33,7 +33,7 @@ node {
   }
   
   stage('System Tests') {
-    sleep 5
+    sleep 6
   }
 }
 
